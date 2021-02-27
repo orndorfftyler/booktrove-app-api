@@ -1,7 +1,7 @@
-const NotesService = {
+const ReviewsService = {
     getById(knex, id) {
         return knex.from('reviews').select('*').where('bookId', id).first()
     }
 };
 
-module.exports = NotesService;
+module.exports = ReviewsService;
