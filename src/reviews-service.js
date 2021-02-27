@@ -1,6 +1,6 @@
 const ReviewsService = {
     getById(knex, id) {
-        return knex.from('reviews').select('*').where('bookid', id).first()
+        return knex.from('reviews').select('*').where('book_id', id).first()
     }
 };
 
