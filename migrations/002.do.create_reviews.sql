@@ -5,7 +5,7 @@ CREATE TABLE reviews (
   title TEXT,
   contents TEXT,
   helpCount INTEGER NOT NULL,
-  'user' INTEGER REFERENCES users(id)
+  userId INTEGER REFERENCES users(id)
 );
 
 
