@@ -32,7 +32,7 @@ reviewRouter
       bookId: xss(res.review.bookid), 
       title: res.review.title,
       contents: res.review.contents,
-      helpCount: xss(res.review.helpCount),
+      helpCount: xss(res.review.helpcount),
       user: res.review.userid
     })
 
