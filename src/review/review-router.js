@@ -28,12 +28,12 @@ reviewRouter
   })
   .get((req, res, next) => {
     res.json({
-      reviewId: res.review.reviewId,
-      bookId: xss(res.review.bookId), 
+      reviewId: res.review.reviewid,
+      bookId: xss(res.review.bookid), 
       title: res.review.title,
       contents: res.review.contents,
       helpCount: xss(res.review.helpCount),
-      user: res.review.userId
+      user: res.review.userid
     })
 
   })
