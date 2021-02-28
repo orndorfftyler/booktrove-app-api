@@ -94,6 +94,37 @@ reviewRouter
     })
     .catch(next)  
   })
+  .patch(jsonParser, (req, res, next) => {
+    let { reviewId, bookId, title, contents, helpCount, user } = req.body
+    let updateRev = { reviewId, bookId, title, contents, helpCount, user }
+
+    const numberOfValues = Object.values(updateRev).filter(Boolean).length
+    if (numberOfValues === 0) {
+      return res.status(400).json({
+        error: {
+          message: `Request body must contain reviewId, bookId, title, contents, helpCount, user`
+        }
+      })
+    }
+
+    updateRev.review_id = updateRev.reviewId;
+    updateRev.book_id = updateRev.bookId;
+    updateRev.help_count = updateRev.helpCount;
+    delete updateRev.reviewId;
+    delete updateRev.bookId;
+    delete updateRev.helpCount;
+    
+    ReviewsService.updateReview(
+      req.app.get('db'),
+      req.params.review_id,
+      updateRev
+    )
+      .then(numRowsAffected => {
+        res.status(204).end()
+      })
+      .catch(next)
+  })
+
 
 
 module.exports = reviewRouter
