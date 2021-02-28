@@ -24,7 +24,7 @@ const ReviewsService = {
     deleteReview(knex, review_id) {
         return knex.from('reviews').select('*').where('review_id', review_id).delete()
     },
-    updateNote(knex, review_id, newReviewFields) {
+    updateReview(knex, review_id, newReviewFields) {
         return knex.from('reviews').select('*').where('review_id', review_id).first().update(newReviewFields)
     }
 };
