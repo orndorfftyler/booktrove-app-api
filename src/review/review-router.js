@@ -8,33 +8,20 @@ const jsonParser = express.json()
 const xss = require('xss')
 const path = require('path')
 
+
 reviewRouter
-  .route('/reviews/:id')
-  .all((req, res, next) => {
-    ReviewsService.getById(
+  .route('/reviews/:book_id')
+  .get((req, res, next) => {
+    ReviewsService.getAllReviewsPerBook(
       req.app.get('db'),
-      req.params.id
+      req.params.book_id
     )
-      .then(review => {
-        if (!review) {
-          return res.status(404).json({
-            error: { message: `review doesn't exist` }
-          })
-        }
-        res.review = review 
-        next() 
+      .then(reviews => {
+        res.json(reviews)
       })
       .catch(next)
   })
-  .get((req, res, next) => {
-    res.json({
-      reviewId: res.review.review_id,
-      bookId: xss(res.review.book_id), 
-      title: res.review.title,
-      contents: res.review.contents,
-      helpCount: xss(res.review.help_count),
-      user: res.review.user_id
-    })
+    
   .post(jsonParser, (req, res, next) => {
     let { reviewId, bookId, title, contents, helpCount, user } = req.body
     let newRev = { reviewId, bookId, title, contents, helpCount, user }
@@ -69,5 +56,37 @@ reviewRouter
   })
 
   })
+
+/*
+reviewRouter
+  .route('/reviews/:book_id')
+  .all((req, res, next) => {
+    ReviewsService.getById(
+      req.app.get('db'),
+      req.params.book_id
+    )
+      .then(review => {
+        if (!review) {
+          return res.status(404).json({
+            error: { message: `book doesn't exist` }
+          })
+        }
+        res.review = review 
+        next() 
+      })
+      .catch(next)
+  })
+  .get((req, res, next) => {
+    res.json({
+      reviewId: res.review.review_id,
+      bookId: xss(res.review.book_id), 
+      title: res.review.title,
+      contents: res.review.contents,
+      helpCount: xss(res.review.help_count),
+      user: res.review.user_id
+    })
+
+    */
+
 
 module.exports = reviewRouter

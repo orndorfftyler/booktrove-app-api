@@ -1,6 +1,6 @@
 const ReviewsService = {
-    getById(knex, id) {
-        return knex.from('reviews').select('*').where('book_id', id).first()
+    getAllReviewsPerBook(knex, book_id) {
+        return knex.from('reviews').select('*').where('book_id', book_id)
     },
     insertReview(knex, newRev) {
         let newId = knex.from('users').select('id').where('username', newRev.user).first()//.then(rows => {return rows[0]});
