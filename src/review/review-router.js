@@ -84,5 +84,16 @@ reviewRouter
     })
 
   })
+  .delete((req, res, next) => {
+    ReviewsService.deleteReview(
+      req.app.get('db'),
+      req.params.review_id
+    )
+    .then(() => {
+      res.status(204).end()
+    })
+    .catch(next)  
+  })
+
 
 module.exports = reviewRouter

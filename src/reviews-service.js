@@ -20,7 +20,11 @@ const ReviewsService = {
     },
     getById(knex, review_id) {
         return knex.from('reviews').select('*').where('review_id', review_id).first()
+    },
+    deleteReview(knex, review_id) {
+        return knex.from('reviews').select('*').where('review_id', review_id).delete()
     }
+
 
 
 };
