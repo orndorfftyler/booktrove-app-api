@@ -8,6 +8,22 @@ const jsonParser = express.json()
 const xss = require('xss')
 const path = require('path')
 
+function processReviews(arrObj) {
+  
+  let outArr = [];
+  for (let i = 0; i < arrObj.length; i++ ){
+    let temp = {};
+    temp.reviewId = arrObj[i]['review_id'];
+    temp.bookId = arrObj[i]['book_id'];
+    temp.title = arrObj[i]['title'];
+    temp.contents = arrObj[i]['contents'];
+    temp.helpCount = arrObj[i]['help_count'];
+    temp.user = arrObj[i]['user_id'];
+    outArr.push(temp);
+  }
+  return outArr;
+}
+
 
 reviewRouter
   .route('/reviewsperbook/:book_id')
@@ -17,8 +33,8 @@ reviewRouter
       req.params.book_id
     )
       .then(reviews => {
-        //add process function to mesh with front end
-        res.json(reviews)
+        let procRev = processReviews(reviews);
+        res.json(procRev)
       })
       .catch(next)
   })
@@ -49,7 +65,7 @@ reviewRouter
     .then(review => {
       res
         .status(201)
-        //.location(path.posix.join(req.originalUrl, `/${review.book_id}`))
+        .location(path.posix.join(req.originalUrl, `/${review.book_id}`))
         .json(review)
     })
   .catch(next)
