@@ -21,7 +21,7 @@ reviewRouter
       })
       .catch(next)
   })
-    /*
+    
   .post(jsonParser, (req, res, next) => {
     let { reviewId, bookId, title, contents, helpCount, user } = req.body
     let newRev = { reviewId, bookId, title, contents, helpCount, user }
@@ -41,7 +41,6 @@ reviewRouter
     delete newRev.bookId;
     delete newRev.helpCount;
 
-
     ReviewsService.insertReview(
       req.app.get('db'),
       newRev
@@ -54,7 +53,7 @@ reviewRouter
     })
   .catch(next)
   })
-*/
+
 
 /*
 reviewRouter
