@@ -35,6 +35,38 @@ reviewRouter
       helpCount: xss(res.review.help_count),
       user: res.review.user_id
     })
+  .post(jsonParser, (req, res, next) => {
+    let { reviewId, bookId, title, contents, helpCount, user } = req.body
+    let newRev = { reviewId, bookId, title, contents, helpCount, user }
+    
+    for (const [key, value] of Object.entries(newRev)) {
+      if (value == null) {
+        return res.status(400).json({
+          error: { message: `Missing '${key}' in request body` }
+        })
+      }
+    }
+
+    newRev.review_id = newRev.reviewId;
+    newRev.book_id = newRev.bookId;
+    newRev.help_count = newRev.helpCount;
+    delete newRev.reviewId;
+    delete newRev.bookId;
+    delete newRev.helpCount;
+
+
+    ReviewsService.insertReview(
+      req.app.get('db'),
+      newRev
+    )
+    .then(review => {
+      res
+        .status(201)
+        .location(path.posix.join(req.originalUrl, `/${review.book_id}`))
+        .json(review)
+    })
+  .catch(next)
+  })
 
   })
 
