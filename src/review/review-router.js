@@ -17,6 +17,7 @@ reviewRouter
       req.params.book_id
     )
       .then(reviews => {
+        //add process function to mesh with front end
         res.json(reviews)
       })
       .catch(next)
@@ -54,19 +55,17 @@ reviewRouter
   .catch(next)
   })
 
-
-/*
 reviewRouter
-  .route('/reviews/:book_id')
+  .route('/reviews/:review_id')
   .all((req, res, next) => {
     ReviewsService.getById(
       req.app.get('db'),
-      req.params.book_id
+      req.params.review_id
     )
       .then(review => {
         if (!review) {
           return res.status(404).json({
-            error: { message: `book doesn't exist` }
+            error: { message: `review doesn't exist` }
           })
         }
         res.review = review 
@@ -84,7 +83,6 @@ reviewRouter
       user: res.review.user_id
     })
 
-    */
-
+  })
 
 module.exports = reviewRouter
