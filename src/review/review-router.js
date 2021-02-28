@@ -10,7 +10,7 @@ const path = require('path')
 
 
 reviewRouter
-  .route('/reviews/:book_id')
+  .route('/reviewsperbook/:book_id')
   .get((req, res, next) => {
     ReviewsService.getAllReviewsPerBook(
       req.app.get('db'),
