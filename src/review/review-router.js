@@ -26,6 +26,22 @@ function processReviews(arrObj) {
 
 
 reviewRouter
+  .route('/users/:username')
+  .get((req, res, next) => {
+    ReviewsService.getUserId(
+      req.app.get('db'),
+      req.params.username
+    )
+      
+      .then(userId => {
+        res.json(userId)
+      })
+      
+      .catch(next)
+  })
+
+
+reviewRouter
   .route('/reviewsperbook/:book_id')
   .get((req, res, next) => {
     ReviewsService.getAllReviewsPerBook(
@@ -34,8 +50,8 @@ reviewRouter
     )
       
       .then(reviews => {
-        //let procRev = processReviews(reviews);
-        res.json(reviews)
+        let procRev = processReviews(reviews);
+        res.json(procRev)
       })
       
       .catch(next)

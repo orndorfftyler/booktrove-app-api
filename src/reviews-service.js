@@ -33,6 +33,9 @@ const ReviewsService = {
     },
     updateReview(knex, review_id, newReviewFields) {
         return knex.from('reviews').select('*').where('review_id', review_id).first().update(newReviewFields)
+    },
+    getUserId(knex, username) {
+        return knex.from('users').select('id').where('username', username).first()
     }
 };
 
