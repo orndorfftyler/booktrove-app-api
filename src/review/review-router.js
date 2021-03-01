@@ -129,14 +129,14 @@ reviewRouter
     .catch(next)  
   })
   .patch(jsonParser, (req, res, next) => {
-    let { reviewId, bookId, title, contents, helpCount, user } = req.body
-    let updateRev = { reviewId, bookId, title, contents, helpCount, user }
+    let { reviewId, bookId, title, contents, helpCount } = req.body
+    let updateRev = { reviewId, bookId, title, contents, helpCount }
 
     const numberOfValues = Object.values(updateRev).filter(Boolean).length
     if (numberOfValues === 0) {
       return res.status(400).json({
         error: {
-          message: `Request body must contain reviewId, bookId, title, contents, helpCount, user`
+          message: `Request body must contain reviewId, bookId, title, contents, helpCount`
         }
       })
     }
