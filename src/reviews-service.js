@@ -2,7 +2,7 @@ const ReviewsService = {
     getAllReviewsPerBook(knex, book_id) {
         let bookReviews = knex.from('reviews').select('*').where('book_id', book_id);
         for (let i = 0; i < bookReviews.length; i++) {
-            bookReviews[i]['user_id'] = knex.from('users').select('username').where('id', bookReviews[i]['user_id']).first()
+            bookReviews[i]['user_id'] = knex.from('users').select('username').where('id', bookReviews[i]['user_id']).first();
         }
         return bookReviews;
     },
