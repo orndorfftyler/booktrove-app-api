@@ -6,7 +6,7 @@ INSERT INTO users (username, pw)
 VALUES
     ('Bulbasaur','bbb'),
     ('Pikachu','ppp'),
-    ('Squirtle', 'sss');
+    ('Squirtle', '$2a$04$IOdFJCcPq5MwZ1Pd7RNU5eVe6JDkt48G6Z79InupI/aoIRE.53SNK');
 
 INSERT INTO reviews (review_id, book_id, title, contents, help_count)
 VALUES
