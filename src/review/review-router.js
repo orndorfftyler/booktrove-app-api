@@ -8,6 +8,9 @@ const jsonParser = express.json()
 const xss = require('xss')
 const path = require('path')
 
+const { requireAuth } = require('../middleware/jwt-auth')
+
+
 function processReviews(arrObj) {
   
   let outArr = [];
@@ -43,6 +46,7 @@ reviewRouter
 
 reviewRouter
   .route('/reviewsperbook/:book_id')
+  .all(requireAuth)
   .get((req, res, next) => {
     ReviewsService.getAllReviewsPerBook(
       req.app.get('db'),
