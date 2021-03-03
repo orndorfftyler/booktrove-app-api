@@ -30,6 +30,7 @@ function processReviews(arrObj) {
 
 reviewRouter
   .route('/users/:username')
+  .all(requireAuth)
   .get((req, res, next) => {
     ReviewsService.getUserId(
       req.app.get('db'),
@@ -95,6 +96,7 @@ reviewRouter
 
 reviewRouter
   .route('/reviews/:review_id')
+  .all(requireAuth)
   .all((req, res, next) => {
     ReviewsService.getById(
       req.app.get('db'),
