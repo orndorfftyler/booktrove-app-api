@@ -164,7 +164,6 @@ reviewRouter
       })
       .catch(next)
   })
-  /* //not used
   .get((req, res, next) => {
     res.json({
       reviewId: res.review.review_id,
@@ -176,7 +175,6 @@ reviewRouter
     })
 
   })
-  */
   .delete((req, res, next) => {
     ReviewsService.deleteReview(
       req.app.get('db'),

@@ -4,8 +4,8 @@ TRUNCATE reviews, users RESTART IDENTITY CASCADE;
 
 INSERT INTO users (username, pw)
 VALUES
-    ('Bulbasaur','bbb'),
-    ('Pikachu','ppp'),
+    ('Bulbasaur','$2a$04$eiOmCEDM7wF.5YgBJZ1wcuBMR2dDeqdtadlkQvmVmO7sLvd1YIXI.'),
+    ('Pikachu','$2a$04$2d4jbxnHeUFZtBbgbNxyJuaG0ArlGThAFQt1BRlaXnbG4dnrZRPMS'),
     ('Squirtle', '$2a$04$IOdFJCcPq5MwZ1Pd7RNU5eVe6JDkt48G6Z79InupI/aoIRE.53SNK');
 
 INSERT INTO reviews (review_id, book_id, title, contents, help_count)
