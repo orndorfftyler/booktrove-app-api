@@ -4,6 +4,7 @@ const bodyParser = express.json()
 const { v4: uuid } = require('uuid')
 
 const ReviewsService = require('../reviews-service')
+const UsersService = require('../users-service')
 const jsonParser = express.json()
 const xss = require('xss')
 const path = require('path')
@@ -26,6 +27,56 @@ function processReviews(arrObj) {
   }
   return outArr;
 }
+
+
+reviewRouter
+  .route('/users/')
+  .post(jsonParser, (req, res, next) => {
+    const { password, user_name} = req.body
+
+    for (const field of ['user_name', 'password'])
+      if (!req.body[field])
+        return res.status(400).json({
+          error: `Missing '${field}' in request body`
+        })
+
+    // TODO: check user_name doesn't start with spaces
+
+    //const passwordError = UsersService.validatePassword(password)
+
+    //if (passwordError)
+    //  return res.status(400).json({ error: passwordError })
+
+    UsersService.hasUserWithUserName(
+      req.app.get('db'),
+      user_name
+    )
+      .then(hasUserWithUserName => {
+        if (hasUserWithUserName)
+          return res.status(400).json({ error: `Username already taken` })
+
+        return UsersService.hashPassword(password)
+          .then(hashedPassword => {
+            const newUser = {
+              username: user_name,
+              pw: hashedPassword
+              //date_created: 'now()',
+            }
+
+            return UsersService.insertUser(
+              req.app.get('db'),
+              newUser
+            )
+              .then(user => {
+                res
+                  .status(201)
+                  //.location(path.posix.join(req.originalUrl, `/${user.id}`))
+                  .json(UsersService.serializeUser(user))
+              })
+          })
+      })
+      .catch(next)
+  })
 
 
 reviewRouter
@@ -113,6 +164,7 @@ reviewRouter
       })
       .catch(next)
   })
+  /* //not used
   .get((req, res, next) => {
     res.json({
       reviewId: res.review.review_id,
@@ -124,6 +176,7 @@ reviewRouter
     })
 
   })
+  */
   .delete((req, res, next) => {
     ReviewsService.deleteReview(
       req.app.get('db'),
