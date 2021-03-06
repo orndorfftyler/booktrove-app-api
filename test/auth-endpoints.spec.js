@@ -1,13 +1,12 @@
 const knex = require('knex')
 const jwt = require('jsonwebtoken')
 const app = require('../src/app')
-const helpers = require('./test-helpers')
+const { makeUsersArray } = require('./users.fixtures');
+const helpers = require('./reviews.fixtures')
+
 
 describe('Auth Endpoints', function() {
   let db
-
-  const { testUsers } = helpers.makeArticlesFixtures()
-  const testUser = testUsers[0]
 
   before('make knex instance', () => {
     db = knex({
@@ -19,24 +18,44 @@ describe('Auth Endpoints', function() {
 
   after('disconnect from db', () => db.destroy())
 
-  before('cleanup', () => helpers.cleanTables(db))
+  beforeEach(async () => {
+    await db.raw('TRUNCATE users, reviews RESTART IDENTITY CASCADE');
+  });
 
-  afterEach('cleanup', () => helpers.cleanTables(db))
+  afterEach(async () => {
+    await db.raw('TRUNCATE users, reviews RESTART IDENTITY CASCADE');
+  });
+
 
   describe(`POST /api/auth/login`, () => {
-    beforeEach('insert users', () =>
-      helpers.seedUsers(
-        db,
-        testUsers,
-      )
-    )
+
+    const testUsers = makeUsersArray()
+    const testReviews = helpers.makeReviewsArray()
+
+    beforeEach('insert users', () => {
+      return db
+        .into('users')
+        .insert(testUsers)
+    })
+    beforeEach('insert reviews', () => {
+      return db
+        .into('reviews')
+        .insert(testReviews)
+    })
+
+    const testUser = {
+      id: 3,
+      username: 'Squirtle',
+      pw: 'sss'
+
+    };
 
     const requiredFields = ['user_name', 'password']
 
     requiredFields.forEach(field => {
       const loginAttemptBody = {
-        user_name: testUser.user_name,
-        password: testUser.password,
+        user_name: testUser.username,
+        password: testUser.pw,
       }
 
       it(`responds with 400 required error when '${field}' is missing`, () => {
@@ -60,7 +79,7 @@ describe('Auth Endpoints', function() {
     })
 
     it(`responds 400 'invalid user_name or password' when bad password`, () => {
-      const userInvalidPass = { user_name: testUser.user_name, password: 'incorrect' }
+      const userInvalidPass = { user_name: testUser.username, password: 'incorrect' }
       return supertest(app)
         .post('/api/auth/login')
         .send(userInvalidPass)
@@ -69,14 +88,14 @@ describe('Auth Endpoints', function() {
 
     it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
       const userValidCreds = {
-        user_name: testUser.user_name,
-        password: testUser.password,
+        user_name: testUser.username,
+        password: testUser.pw,
       }
       const expectedToken = jwt.sign(
         { user_id: testUser.id },
         process.env.JWT_SECRET,
         {
-          subject: testUser.user_name,
+          subject: testUser.username,
           algorithm: 'HS256',
         }
       )

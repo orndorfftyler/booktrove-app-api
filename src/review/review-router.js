@@ -139,7 +139,7 @@ reviewRouter
     .then(review => {
       res
         .status(201)
-        .location(path.posix.join(req.originalUrl, `/${review.book_id}`))
+        .location(path.posix.join(req.originalUrl/*, `/${review.book_id}`*/))
         .json(review)
     })
   .catch(next)

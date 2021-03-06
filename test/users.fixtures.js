@@ -1,6 +1,5 @@
 function makeUsersArray() {
     return [
-
         {
           id: 1,
           username: 'Bulbasaur',
@@ -15,10 +14,10 @@ function makeUsersArray() {
           id: 3,
           username: 'Squirtle',
           pw: '$2a$04$IOdFJCcPq5MwZ1Pd7RNU5eVe6JDkt48G6Z79InupI/aoIRE.53SNK'
-        },
+        }
       ];
   }
   
   module.exports = {
-    makeUsersArray,
+    makeUsersArray
   }

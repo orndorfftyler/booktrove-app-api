@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "Mocha --require Test/setup.js",
+    "test": "mocha --require test/setup.js --timeout 10000",
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "migrate": "postgrator --config postgrator-config.js",
@@ -29,13 +29,13 @@
     "knex": "^0.21.2",
     "lodash": "^4.17.19",
     "morgan": "^1.10.0",
-    "pg": "^7.18.2",
+    "pg": "^8.5.1",
     "postgrator-cli": "^3.2.0",
     "postgresql": "0.0.1",
     "xss": "^1.0.8"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
+    "chai": "^4.3.3",
     "mocha": "^7.2.0",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2"
