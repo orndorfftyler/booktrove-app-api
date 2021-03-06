@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-//const Knex = require('knex')
 const config = require('../config')
 
 const AuthService = {
@@ -23,12 +22,6 @@ const AuthService = {
     return jwt.verify(token, config.JWT_SECRET, {
       algorithms: ['HS256'],
     })
-  },
-  parseBasicToken(token) {
-    return Buffer
-      .from(token, 'base64')
-      .toString()
-      .split(':')
   },
 }
 
