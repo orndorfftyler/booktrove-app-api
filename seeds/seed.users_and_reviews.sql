@@ -18,3 +18,8 @@ UPDATE reviews SET user_id = 1 WHERE id = 1;
 UPDATE reviews SET user_id = 2 WHERE id = 2;
 UPDATE reviews SET user_id = 3 WHERE id = 3;
 
+INSERT INTO helpful (user_id, review_id)
+VALUES
+    (2, 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1'),
+    (3, 'b07161a6-ffaf-11e8-8eb2-f2801f1b9fd1'),
+    (1, 'b07162f0-ffaf-11e8-8eb2-f2801f1b9fd1');
