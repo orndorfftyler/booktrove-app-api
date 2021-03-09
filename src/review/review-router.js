@@ -209,7 +209,7 @@ reviewRouter
   })
 ////////////////////////////////////////////////////////////////////////////////
   reviewRouter
-  .route('/helpful/:book_id')
+  .route('/helpfulbook/:book_id')
   .all(requireAuth)
   .get((req, res, next) => {
     ReviewsService.getHelpfulByBookId(
@@ -250,7 +250,7 @@ reviewRouter
   })
 
   reviewRouter
-  .route('/helpful/:user_id')
+  .route('/helpfuluser/:user_id')
   .all(requireAuth)
   .get((req, res, next) => {
     ReviewsService.getHelpfulByUserId(
@@ -266,7 +266,7 @@ reviewRouter
   })
 
   reviewRouter
-  .route('/reviews/:review_id')
+  .route('/helpfulreview/:review_id')
   .all(requireAuth)
   /*
   .all((req, res, next) => {
