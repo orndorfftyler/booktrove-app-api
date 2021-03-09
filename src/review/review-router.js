@@ -293,7 +293,7 @@ reviewRouter
     ReviewsService.deleteHelpful(
       req.app.get('db'),
       req.params.review_id,
-      newRev
+      newRev.user_id
     )
     .then(() => {
       res.status(204).end()
