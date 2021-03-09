@@ -207,7 +207,98 @@ reviewRouter
       })
       .catch(next)
   })
+////////////////////////////////////////////////////////////////////////////////
+  reviewRouter
+  .route('/helpful/:book_id')
+  .all(requireAuth)
+  .get((req, res, next) => {
+    ReviewsService.getHelpfulByBookId(
+      req.app.get('db'),
+      req.params.book_id
+    )
+      
+      .then(helpfuls => {
+        res.json(helpfuls)
+      })
+      
+      .catch(next)
+  })
+    
+  .post(jsonParser, (req, res, next) => {
+    let { user_id, review_id, book_id } = req.body
+    let newRev = { user_id, review_id, book_id }
+    
+    for (const [key, value] of Object.entries(newRev)) {
+      if (value == null) {
+        return res.status(400).json({
+          error: { message: `Missing '${key}' in request body` }
+        })
+      }
+    }
 
+    ReviewsService.insertHelpful(
+      req.app.get('db'),
+      newRev
+    )
+    .then(helpful => {
+      res
+        .status(201)
+        //.location(path.posix.join(req.originalUrl/*, `/${review.book_id}`*/))
+        .json(helpful)
+    })
+  .catch(next)
+  })
 
+  reviewRouter
+  .route('/helpful/:user_id')
+  .all(requireAuth)
+  .get((req, res, next) => {
+    ReviewsService.getHelpfulByUserId(
+      req.app.get('db'),
+      req.params.user_id
+    )
+      
+      .then(helpfuls => {
+        res.json(helpfuls)
+      })
+      
+      .catch(next)
+  })
+
+  reviewRouter
+  .route('/reviews/:review_id')
+  .all(requireAuth)
+  /*
+  .all((req, res, next) => {
+    ReviewsService.getById(
+      req.app.get('db'),
+      req.params.review_id
+    )
+      .then(review => {
+        if (!review) {
+          return res.status(404).json({
+            error: { message: `review doesn't exist` }
+          })
+        }
+        res.review = review 
+        next() 
+      })
+      .catch(next)
+  })
+  */
+  .delete((req, res, next) => {
+    let { user_id } = req.body
+    let newRev = { user_id }
+
+    ReviewsService.deleteHelpful(
+      req.app.get('db'),
+      req.params.review_id,
+      newRev.user_id
+    )
+    .then(() => {
+      res.status(204).end()
+    })
+    .catch(next)  
+  })
 
 module.exports = reviewRouter

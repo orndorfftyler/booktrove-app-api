@@ -30,7 +30,33 @@ const ReviewsService = {
     },
     getUserId(knex, username) {
         return knex.from('users').select('id').where('username', username).first()
-    }
+    },
+    getHelpfulByBookId(knex, book_id) {
+        return knex.from('helpful').select('*').where('book_id', book_id)
+    },
+    insertHelpful(knex, helpful) {
+
+        return knex
+            .insert(helpful)
+            .into('helpful')
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+            
+    },
+    getHelpfulByUserId(knex, user_id) {
+        return knex.from('helpful').select('*').where('user_id', user_id)
+    },
+    getHelpfulByReviewId(knex, review_id) {
+        return knex.from('helpful').select('*').where('review_id', review_id)
+    },
+    deleteHelpful(knex, review_id, user_id) {
+        return knex.from('helpful').select('*').where({
+            review_id: review_id,
+            user_id: user_id
+          }).delete()
+    },
 };
 
 module.exports = ReviewsService;
