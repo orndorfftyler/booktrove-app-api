@@ -51,12 +51,16 @@ const ReviewsService = {
     getHelpfulByReviewId(knex, review_id) {
         return knex.from('helpful').select('*').where('review_id', review_id)
     },
-    deleteHelpful(knex, review_id, user_id) {
+    deleteHelpful(knex, helpful_id) {
+        return knex.from('helpful').select('*').where('id', helpful_id).delete()
+    },
+    getHelpfulUniqueId(knex, review_id, user_id) {
         return knex.from('helpful').select('*').where({
             review_id: review_id,
             user_id: user_id
-          }).delete()
+          }).first()
     },
+
 };
 
 module.exports = ReviewsService;
