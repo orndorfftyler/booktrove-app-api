@@ -207,14 +207,14 @@ reviewRouter
       })
       .catch(next)
   })
-////////////////////////////////////////////////////////////////////////////////
+//----------------------------------------------- helpful endpoints
   reviewRouter
-  .route('/helpfulbook/:book_id')
+  .route('/helpfulreview/:review_id')
   .all(requireAuth)
   .get((req, res, next) => {
-    ReviewsService.getHelpfulByBookId(
+    ReviewsService.getHelpfulByReviewId(
       req.app.get('db'),
-      req.params.book_id
+      req.params.review_id
     )
       
       .then(helpfuls => {
@@ -248,7 +248,7 @@ reviewRouter
     })
   .catch(next)
   })
-
+/*
   reviewRouter
   .route('/helpfuluser/:user_id')
   .all(requireAuth)
@@ -264,7 +264,9 @@ reviewRouter
       
       .catch(next)
   })
+*/
 
+/*
   reviewRouter
   .route('/helpfulreview/:review_id')
   .all(requireAuth)
@@ -288,12 +290,12 @@ reviewRouter
     .then(helpful => {
       res
         .status(200)
-        //.location(path.posix.join(req.originalUrl/*, `/${review.book_id}`*/))
+        //.location(path.posix.join(req.originalUrl, `/${review.book_id}`))
         .json(helpful)
     })
   .catch(next)
   })
-
+*/
 
   reviewRouter
   .route('/helpful/:help_id')

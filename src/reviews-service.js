@@ -31,9 +31,11 @@ const ReviewsService = {
     getUserId(knex, username) {
         return knex.from('users').select('id').where('username', username).first()
     },
-    getHelpfulByBookId(knex, book_id) {
-        return knex.from('helpful').select('*').where('book_id', book_id)
+
+    getHelpfulByReviewId(knex, review_id) {
+        return knex.from('helpful').select('*').where('review_id', review_id)
     },
+
     insertHelpful(knex, helpful) {
 
         return knex
@@ -45,22 +47,22 @@ const ReviewsService = {
             })
             
     },
+    /*
     getHelpfulByUserId(knex, user_id) {
         return knex.from('helpful').select('*').where('user_id', user_id)
     },
-    getHelpfulByReviewId(knex, review_id) {
-        return knex.from('helpful').select('*').where('review_id', review_id)
-    },
+    */
     deleteHelpful(knex, helpful_id) {
         return knex.from('helpful').select('*').where('id', helpful_id).delete()
     },
+    /*
     getHelpfulUniqueId(knex, review_id, user_id) {
         return knex.from('helpful').select('*').where({
             review_id: review_id,
             user_id: user_id
           }).first()
     },
-
+*/
 };
 
 module.exports = ReviewsService;
