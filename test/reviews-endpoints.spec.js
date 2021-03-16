@@ -250,7 +250,110 @@ describe('Review and User Endpoints', function() {
               })
           )
       })
+
+
+
+
+
+
     })
   })
+
+
+  describe(`GET /api/helpfulreview/:review_id`, () => {
+    context('Given there is helpful feedback for a certain review', () => {
+    const testUsers = makeUsersArray()
+    const testReviews = helpers.makeReviewsArray()
+    const testHelpfuls = helpers.makeHelpfulsArray()
+
+    beforeEach('insert users', () => {
+      return db
+        .into('users')
+        .insert(testUsers)
+    })
+    beforeEach('insert reviews', () => {
+      return db
+        .into('reviews')
+        .insert(testReviews)
+    })
+    beforeEach('insert reviews', () => {
+      return db
+        .into('helpful')
+        .insert(testHelpfuls)
+    })
+
+    it('responds with helpful data for given review', () => {
+      const expectedReview = testHelpfuls[0]
+      return supertest(app)
+        .get(`/api/helpfulreview/b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1`)
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+        .expect(res => {
+          expect(res.body[0]['id']).to.eql(expectedReview.id)
+          expect(res.body[0]['user_id']).to.eql(expectedReview.user_id)
+          expect(res.body[0]['review_id']).to.eql(expectedReview.review_id)
+          expect(res.body[0]['book_id']).to.eql(expectedReview.book_id)
+
+        })
+    })
+
+
+
+
+  })
+}) 
+
+  describe(`POST /api/helpfulreview/:review_id`, () => {
+    context('Given there are reviews for a certain book', () => {
+      const testUsers = makeUsersArray()
+      const testReviews = helpers.makeReviewsArray()
+      const testHelpfuls = helpers.makeHelpfulsArray()
+
+      beforeEach('insert users', () => {
+        return db
+          .into('users')
+          .insert(testUsers)
+      })
+      beforeEach('insert reviews', () => {
+        return db
+          .into('reviews')
+          .insert(testReviews)
+      })
+      beforeEach('insert reviews', () => {
+        return db
+          .into('helpful')
+          .insert(testHelpfuls)
+      })
+
+      it(`creates a review helpful feedback, responding with 201 and the new helpful data`,  function() {
+        this.retries(3)
+        const newHelpful = {
+          id: 1,
+          user_id: 3,
+          review_id: 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1',
+          book_id: 'f2801f1b9fd1'
+        }
+
+        return supertest(app)
+          .post(`/api/helpfulreview/b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1`)
+          .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+          .set('content-type', 'application/json')
+          .send(newHelpful)
+
+          .expect(201)
+          .expect(res => {
+            expect(res.body['id']).to.eql(newHelpful.id)
+            expect(res.body['user_id']).to.eql(newHelpful.user_id)
+            expect(res.body['review_id']).to.eql(newHelpful.review_id)
+            expect(res.body['book_id']).to.eql(newHelpful.book_id)
+          })
+        
+      })
+    })  
+  }) 
+
+
+
+
+
 
 })

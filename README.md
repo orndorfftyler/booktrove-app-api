@@ -1,25 +1,56 @@
-# booktrove-app-api
+# BookTrove (API)
 
+Try it out here: [https://booktrove-app.vercel.app](https://booktrove-app.vercel.app).
 
-## Set up
+BookTrove Client repo: [https://github.com/orndorfftyler/booktrove-app](https://github.com/orndorfftyler/booktrove-app)
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+### Summary
 
-1. Clone this repository to your local machine `git clone https://github.com/orndorfftyler/express-boilerplate.git NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+BookTrove allows you to read and write reviews of your favorite books. Users first sign up or log in before accessing the search page. The search page is powered by Google Books and allows you to search for books in which you are interested. Clicking on a book in the search results brings you to a page which lists the reviews left for that book by other BookTrove users. Users may indicate which reviews they found useful and leave their own review.
 
-## Scripts
+### Tech Used
 
-Start the application `npm start`
+Built with HTML, CSS, JavaScript, React, React Router, Node.js, Express, Knex, PostgresSQL.  
+Frontend deployed using Vercel. Backend deployed using Heroku.
 
-Start nodemon for the application `npm run dev`
+### API Documentation
 
-Run the tests `npm test`
+BookTrove API endpoints:
 
-## Deploying
+POST /api/auth/login
+- returns a JWT if user credentials are valid 
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
+GET /api/reviewsperbook/:book_id
+- gets the reviews for a given book
+
+POST /api/reviewsperbook/:book_id
+- adds a review for a given book
+
+DELETE /api/reviews/:review_id
+- deletes a review
+
+PATCH /api/reviews/:review_id
+- updates an existing review
+
+GET /api/helpfulreview/:review_id
+- gets a list of which users found a given review helpful
+
+POST /api/helpfulreview/:review_id
+- adds to the list of which users found a given review helpful
+
+POST /api/users/
+- creates a new user/pw combo
+
+### Screenshots
+
+Login page:
+
+<img src="./screenshots/booktrove-login.PNG" width="500">
+
+Search page:
+
+<img src="./screenshots/booktrove-search.PNG" width="600">
+
+Book review page:
+
+<img src="./screenshots/booktrove-book.PNG" width="600">

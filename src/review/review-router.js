@@ -248,70 +248,7 @@ reviewRouter
     })
   .catch(next)
   })
-/*
-  reviewRouter
-  .route('/helpfuluser/:user_id')
-  .all(requireAuth)
-  .get((req, res, next) => {
-    ReviewsService.getHelpfulByUserId(
-      req.app.get('db'),
-      req.params.user_id
-    )
-      
-      .then(helpfuls => {
-        res.json(helpfuls)
-      })
-      
-      .catch(next)
-  })
-*/
 
-/*
-  reviewRouter
-  .route('/helpfulreview/:review_id')
-  .all(requireAuth)
-  .post(jsonParser, (req, res, next) => {
-    let { user_id} = req.body
-    let newRev = { user_id}
-    
-    for (const [key, value] of Object.entries(newRev)) {
-      if (value == null) {
-        return res.status(400).json({
-          error: { message: `Missing '${key}' in request body` }
-        })
-      }
-    }
-
-    ReviewsService.getHelpfulUniqueId(
-      req.app.get('db'),
-      req.params.review_id,
-      newRev.user_id
-    )
-    .then(helpful => {
-      res
-        .status(200)
-        //.location(path.posix.join(req.originalUrl, `/${review.book_id}`))
-        .json(helpful)
-    })
-  .catch(next)
-  })
-*/
-
-  reviewRouter
-  .route('/helpful/:help_id')
-  .all(requireAuth)
-    
-  .delete((req, res, next) => {
-
-    ReviewsService.deleteHelpful(
-      req.app.get('db'),
-      req.params.help_id
-    )
-    .then(() => {
-      res.status(204).end()
-    })
-    .catch(next)  
-  })
 
 
 module.exports = reviewRouter

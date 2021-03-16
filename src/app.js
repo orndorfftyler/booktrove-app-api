@@ -28,10 +28,6 @@ app.use('/api', reviewRouter)
 
 app.use('/api/auth', authRouter)
 
-app.get('/', (req, res) => {
-    res.send('Hello, boilerplate!')
-})
-
 app.use(function errorHandler(error, req, res, next) {
     let response
     if (NODE_ENV === 'production') {
