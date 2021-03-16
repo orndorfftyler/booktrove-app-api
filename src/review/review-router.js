@@ -11,7 +11,6 @@ const path = require('path')
 
 const { requireAuth } = require('../middleware/jwt-auth')
 
-
 function processReviews(arrObj) {
   
   let outArr = [];
@@ -27,7 +26,6 @@ function processReviews(arrObj) {
   }
   return outArr;
 }
-
 
 reviewRouter
   .route('/users/')
@@ -70,7 +68,6 @@ reviewRouter
       .catch(next)
   })
 
-
 reviewRouter
   .route('/users/:username')
   .all(requireAuth)
@@ -86,7 +83,6 @@ reviewRouter
       
       .catch(next)
   })
-
 
 reviewRouter
   .route('/reviewsperbook/:book_id')
@@ -207,7 +203,9 @@ reviewRouter
       })
       .catch(next)
   })
+
 //----------------------------------------------- helpful endpoints
+
   reviewRouter
   .route('/helpfulreview/:review_id')
   .all(requireAuth)
@@ -243,12 +241,9 @@ reviewRouter
     .then(helpful => {
       res
         .status(201)
-        //.location(path.posix.join(req.originalUrl/*, `/${review.book_id}`*/))
         .json(helpful)
     })
   .catch(next)
   })
-
-
 
 module.exports = reviewRouter

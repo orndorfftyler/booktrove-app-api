@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const xss = require('xss')
 
-
 const UsersService = {
   hasUserWithUserName(knex, user_name) {
     return knex.from('users')

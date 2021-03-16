@@ -7,7 +7,6 @@ const { NODE_ENV } = require('./config')
 const authRouter = require('./auth/auth-router')
 const reviewRouter = require('./review/review-router')
 
-
 const app = express()
 
 const morganOption = (NODE_ENV === 'production')

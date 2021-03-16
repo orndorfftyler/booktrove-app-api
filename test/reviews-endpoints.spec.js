@@ -251,14 +251,8 @@ describe('Review and User Endpoints', function() {
           )
       })
 
-
-
-
-
-
     })
   })
-
 
   describe(`GET /api/helpfulreview/:review_id`, () => {
     context('Given there is helpful feedback for a certain review', () => {
@@ -295,10 +289,6 @@ describe('Review and User Endpoints', function() {
 
         })
     })
-
-
-
-
   })
 }) 
 
@@ -350,10 +340,5 @@ describe('Review and User Endpoints', function() {
       })
     })  
   }) 
-
-
-
-
-
-
+  
 })

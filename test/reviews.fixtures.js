@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 function makeReviewsArray() {
@@ -32,7 +31,6 @@ function makeReviewsArray() {
         }
       ];
   }
-
     
   function makeHelpfulsArray() {
     return [
@@ -57,7 +55,6 @@ function makeReviewsArray() {
       ];
   }
 
-
   function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
     const token = jwt.sign({ user_id: user.id }, secret, {
       subject: user.username,
@@ -65,7 +62,6 @@ function makeReviewsArray() {
     })
     return `Bearer ${token}`
   }
-  
   
   module.exports = {
     makeReviewsArray,

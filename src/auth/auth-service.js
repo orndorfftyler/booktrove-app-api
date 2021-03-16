@@ -6,7 +6,6 @@ const AuthService = {
   getUserWithUserName(knex, user_name) {
     return knex.from('users').select('*')
       .where('username', user_name)
-      //.where('book_id', book_id);
       .first()
   },
   comparePasswords(password, hash) {

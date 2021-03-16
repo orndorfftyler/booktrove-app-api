@@ -4,7 +4,6 @@ const app = require('../src/app')
 const { makeUsersArray } = require('./users.fixtures');
 const helpers = require('./reviews.fixtures')
 
-
 describe('Auth Endpoints', function() {
   let db
 
@@ -25,7 +24,6 @@ describe('Auth Endpoints', function() {
   afterEach(async () => {
     await db.raw('TRUNCATE users, reviews RESTART IDENTITY CASCADE');
   });
-
 
   describe(`POST /api/auth/login`, () => {
 
