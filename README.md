@@ -1,6 +1,6 @@
 # BookTrove (API)
 
-Try it out here: [https://booktrove-app.vercel.app](https://booktrove-app.vercel.app).
+Try out the app here: [https://booktrove-app.vercel.app](https://booktrove-app.vercel.app).
 
 BookTrove Client repo: [https://github.com/orndorfftyler/booktrove-app](https://github.com/orndorfftyler/booktrove-app)
 
